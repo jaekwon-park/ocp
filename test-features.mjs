@@ -999,6 +999,13 @@ test("firstBalancedJson returns null on unbalanced input", () => {
   assert.equal(firstBalancedJson('{"a":1'), null);
 });
 
+test("extractJson handles multi-fenced-block input (only first JSON)", () => {
+  const multiFence = "```json\n{\"a\":1}\n```\n\nor:\n\n```\n{\"b\":2}\n```";
+  const result = extractJson(multiFence);
+  JSON.parse(result);
+  assert.equal(result, '{"a":1}');
+});
+
 // ── Cleanup ──
 closeDb();
 
